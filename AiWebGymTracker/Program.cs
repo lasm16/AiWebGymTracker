@@ -1,3 +1,6 @@
+using AiGymTracker.WebApp.Extensions;
+using AiGymTracker.WebApp.HostedServices;
+
 namespace AiWebGymTracker
 {
     public class Program
@@ -8,6 +11,10 @@ namespace AiWebGymTracker
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddHostedService<HostedService>();
+
+            builder.Services.RegisterContext(builder.Configuration);
 
             var app = builder.Build();
 
