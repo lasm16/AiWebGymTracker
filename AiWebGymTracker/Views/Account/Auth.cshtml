@@ -1,0 +1,89 @@
+@model AiWebGymTracker.Models.AuthModel
+
+@{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Авторизация</title>
+    <link href="~/css/login.css" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <div id="content">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab active" data-tab="login">Вход</button>
+                    <button type="button" class="auth-tab" data-tab="register">Регистрация</button>
+                    <div class="active-indicator"></div>
+                </div>
+                <form asp-controller="Account" asp-action="SigninUser" method="post" class="auth-form active">
+                    <div asp-validation-summary="All" class="auth-errors"></div>
+                    <div class="form-group">
+                        <label asp-for="SigninForm.Email">Email</label>
+                        <input asp-for="SigninForm.Email" class="modal-input"/>
+                        <span asp-validation-for="SigninForm.Email" class="validation-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SigninForm.Password">Пароль</label>
+                         <input asp-for="SigninForm.Password" class="modal-input" type="password" />
+                        <span asp-validation-for="SigninForm.Password" class="validation-password"></span>
+                    </div>
+                    <div class="step-buttons">
+                        <button type="submit" class="app-button auth-button btn-submit">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </form>
+                <form asp-controller="Account"  asp-action="RegisterUser" method="post" class="auth-form">
+                    <div asp-validation-summary="All" class="auth-errors"></div>
+                    <div class="form-step active" data-step="1">
+                        <div class="form-group">
+                            <label asp-for="RegisterFrom.Email">Email</label>
+                            <input asp-for="RegisterFrom.Email" class="modal-input"/>
+                            <span asp-validation-for="RegisterFrom.Email" class="validation-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RegisterFrom.Password">Пароль</label>
+                            <input asp-for="RegisterFrom.Password" class="modal-input" type="password"/>
+                            <span asp-validation-for="RegisterFrom.Password" class="validation-password"></span>
+                        </div>
+                        <div class="step-buttons">
+                            <button type="button" class="app-button auth-button btn-next-step">
+                                <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-step" data-step="2">
+                        <div class="form-group">
+                            <label asp-for="RegisterFrom.Username">Никнейм</label>
+                            <input asp-for="RegisterFrom.Username" class="modal-input"/>
+                        </div>
+                        <div class="step-buttons">
+                            <button type="button" class="app-button auth-button btn-prev-step">
+                                <i class="fa fa-arrow-left"></i>
+                            </button>
+                            <button type="submit" class="app-button auth-button btn-submit">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="~/js/login.js" asp-append-version="true"></script>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

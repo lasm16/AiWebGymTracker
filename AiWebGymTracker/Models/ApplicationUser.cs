@@ -1,6 +1,8 @@
-﻿namespace AiWebGymTracker.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace AiWebGymTracker.Models
 {
-    public class ApplicationUser
+    public class ApplicationUser : IdentityUser<int>
     {
     }
 }
