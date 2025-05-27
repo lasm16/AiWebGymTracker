@@ -28,6 +28,5 @@ internal static class ServiceConfigurer
 
         services.AddAuthentication().AddCookie();
         services.AddScoped<IAccountService, AccountService>();
-
     }
 }

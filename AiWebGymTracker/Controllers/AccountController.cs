@@ -12,7 +12,6 @@ public class AccountController(IAccountService accountService) : Controller
     [HttpGet]
     public IActionResult Auth()
     {
-        ViewBag.HideLayout = true;
         return View(new AuthModel());
     }
 
@@ -34,7 +33,6 @@ public class AccountController(IAccountService accountService) : Controller
         dto.Username = string.Empty;
             
         return View("Auth", new AuthModel());
-
     }
 
     [HttpPost]
@@ -44,13 +42,12 @@ public class AccountController(IAccountService accountService) : Controller
         var result = await _accountService.LoginAsync(dto.Email, dto.Password);
 
         if (result.Succeeded) return RedirectToAction("index", "Home");
-        ModelState.AddModelError(string.Empty, "Логин или пароль ведены неверно");
         
+        ModelState.AddModelError(string.Empty, "Логин или пароль ведены неверно");
         dto.Email = string.Empty;
         dto.Password = string.Empty;
 
         return View("Auth", new AuthModel());
-
     }
 
     [HttpPost]
@@ -60,5 +57,4 @@ public class AccountController(IAccountService accountService) : Controller
         
         return RedirectToAction("Auth", "Account");
     }
-
 }
