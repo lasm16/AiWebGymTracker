@@ -3,17 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AiWebGymTracker.Models
 {
-    public class Session
+    public class Training
     {
         [Key]
         [Column("id")]
         public int Id { get; set; }
 
-        //[Column("workout_id")]
-        //public Workout WorkoutID { get; set; }
-
-        [Column("coach_id")]
-        public Coach coach { get; set; }        
+        public ApplicationUser? Coach { get; set; }
+        public ApplicationUser Trainee { get; set; }
 
         [Column("start_session")]
         public DateTime StartSession { get; set; }
@@ -22,6 +19,6 @@ namespace AiWebGymTracker.Models
         public DateTime EndSession { get; set; }
 
         [Column("status")]
-        public SessionType  SessionType { get; set; }
+        public TrainingType  SessionType { get; set; }
     }
 }
