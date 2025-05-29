@@ -1,8 +1,18 @@
-﻿@{
+﻿@model AiWebGymTracker.Enums.UserServices
+
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="content">
+    <div class="service-container">
+        @foreach (var service in Enum.GetValues(typeof(AiWebGymTracker.Enums.UserServices)))
+        {
+            <div class="service">
+                <div class="icon" aria-hidden="true"><i class="fas fa-plus-circle"></i></div>
+                <div class="text-content">
+                    <h3 class="title">@service.ToString()</h3>
+                </div>
+            </div>
+        }
+    </div> 
 </div>
