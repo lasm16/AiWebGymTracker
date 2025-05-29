@@ -1,5 +1,15 @@
 using AiGymTracker.WebApp.Extensions;
 using AiGymTracker.WebApp.HostedServices;
+using AiWebGymTracker.Abstractions;
+using AiWebGymTracker.DAL;
+using AiWebGymTracker.Infrastructure.Configurers;
+using AiWebGymTracker.Infrastructure.Services;
+using AiWebGymTracker.Middleware;
+using AiWebGymTracker.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace AiWebGymTracker
 {
@@ -8,35 +18,41 @@ namespace AiWebGymTracker
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
+            
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddHostedService<HostedService>();
 
             builder.Services.RegisterContext(builder.Configuration);
 
+            builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+    
+            builder.Services.AddAuthentication().AddCookie();
+            builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
+    
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
+            
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    
             app.Run();
         }
     }

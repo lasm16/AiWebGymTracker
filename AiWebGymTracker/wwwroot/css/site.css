@@ -1,6 +1,116 @@
-html {
-  font-size: 14px;
+:root {
+  --primary: #4a6cf7;
+  --primary-hover: #3a5ae8;
+  --danger: #ff6b81;
+  --danger-hover: #e84a5f;
+  --text: #2c3e50;
+  --text-light: #7f8c8d;
+  --border: #eee;
+  --bg: #f5f7fa;
+  --error: #f72585;
+  --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition: all 0.3s ease;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+#content {
+  background-color: white;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  min-height: 80vh;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+}
+
+.service-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 20px;
+}
+
+.service {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border: 1px solid var(--border);
+}
+
+.service:hover:not(.modal-service) {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary);
+}
+
+.icon {
+  font-size: 28px;
+  color: var(--primary);
+  width: 60px;
+  height: 60px;
+  background: rgba(74, 108, 247, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-button {
+  width: 40px;
+  height: 40px;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  background: var(--primary);
+}
+
+.action-btn:hover,
+.btn-submit:hover,
+.btn-next-step:hover,
+.btn-prev-step:hover {
+  background: var(--primary-hover);
+  transform: scale(1.1);
+}
+
+.modal-input, .modal-textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  font-size: 1rem;
+  color: var(--text);
+  outline: none;
+  transition: var(--transition);
+}
+  .modal-input:focus, .modal-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+  }
 
 @media (min-width: 768px) {
   html {
