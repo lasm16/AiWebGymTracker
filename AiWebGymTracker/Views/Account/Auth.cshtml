@@ -28,14 +28,14 @@
                 <form asp-controller="Account" asp-action="SigninUser" method="post" class="auth-form active">
                     <div asp-validation-summary="All" class="auth-errors"></div>
                     <div class="form-group">
-                        <label asp-for="SigninForm.Email">Email</label>
-                        <input asp-for="SigninForm.Email" class="modal-input"/>
-                        <span asp-validation-for="SigninForm.Email" class="validation-message"></span>
+                        <label asp-for="SignInForm.Email">Email</label>
+                        <input asp-for="SignInForm.Email" class="modal-input"/>
+                        <span asp-validation-for="SignInForm.Email" class="validation-message"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="SigninForm.Password">Пароль</label>
-                         <input asp-for="SigninForm.Password" class="modal-input" type="password" />
-                        <span asp-validation-for="SigninForm.Password" class="validation-password"></span>
+                        <label asp-for="SignInForm.Password">Пароль</label>
+                         <input asp-for="SignInForm.Password" class="modal-input" type="password" />
+                        <span asp-validation-for="SignInForm.Password" class="validation-password"></span>
                     </div>
                     <div class="step-buttons">
                         <button type="submit" class="app-button auth-button btn-submit">

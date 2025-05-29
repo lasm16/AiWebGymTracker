@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AiWebGymTracker.Models.DTO.AuthDTO;
 
-public class SigninUserDto
+public class SignInUserDto
 {
     [Required(ErrorMessage = "E-mail обязателен")]
     [EmailAddress(ErrorMessage = "Некорректный формат email")]

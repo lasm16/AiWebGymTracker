@@ -21,39 +21,39 @@ public class AccountController(IAccountService accountService) : Controller
     {
         var result = await _accountService.RegisterAsync(dto.Email, dto.Password, dto.Username);
 
-        if (result.Succeeded) return RedirectToAction("Index", "Home");
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Index", "Home");
+        }
         
         foreach (var error in result.Errors)
         {
-            ModelState.AddModelError(error.Code, error.Description);
+            ModelState.AddModelError(string.Empty, error.Description);
         }
-            
-        dto.Email = string.Empty;
-        dto.Password = string.Empty;
-        dto.Username = string.Empty;
             
         return View("Auth", new AuthModel());
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SigninUser([Bind(Prefix = "SigninUser")] SigninUserDto dto)
+    public async Task<IActionResult> SignInUser([Bind(Prefix = "SigninUser")] SignInUserDto dto)
     {
-        var result = await _accountService.LoginAsync(dto.Email, dto.Password);
+        var result = await _accountService.LogInAsync(dto.Email, dto.Password);
 
-        if (result.Succeeded) return RedirectToAction("index", "Home");
+        if (result.Succeeded)
+        {
+            return RedirectToAction("index", "Home");
+        }
         
         ModelState.AddModelError(string.Empty, "Логин или пароль ведены неверно");
-        dto.Email = string.Empty;
-        dto.Password = string.Empty;
 
         return View("Auth", new AuthModel());
     }
 
     [HttpPost]
-    public async Task<IActionResult> SignoutUser()
+    public async Task<IActionResult> SignOutUser()
     {
-        await _accountService.LogoutAsync();
+        await _accountService.LogOutAsync();
         
         return RedirectToAction("Auth", "Account");
     }

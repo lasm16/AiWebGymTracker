@@ -6,5 +6,5 @@ namespace AiWebGymTracker.Models;
 public class AuthModel
 {
     public RegisterUserDto RegisterFrom { get; init; } = new();
-    public SigninUserDto SigninForm { get; init; } = new();
+    public SignInUserDto SignInForm { get; init; } = new();
 }

@@ -26,7 +26,7 @@ public class AccountService(
         return result;
     }
 
-    public async Task<SignInResult> LoginAsync(string email, string password)
+    public async Task<SignInResult> LogInAsync(string email, string password)
     {
         var user = await _userManager.FindByEmailAsync(email);
 
@@ -38,7 +38,7 @@ public class AccountService(
         return await _signInManager.PasswordSignInAsync(user, password, false, false);
     }
 
-    public Task LogoutAsync()
+    public Task LogOutAsync()
     {
         return _signInManager.SignOutAsync();
     }

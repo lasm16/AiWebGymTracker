@@ -7,6 +7,6 @@ namespace AiWebGymTracker.Abstractions;
 public interface IAccountService
 {
     Task<IdentityResult> RegisterAsync(string email, string login, string password);
-    Task<SignInResult> LoginAsync(string email, string password);
-    Task LogoutAsync();
+    Task<SignInResult> LogInAsync(string email, string password);
+    Task LogOutAsync();
 }
