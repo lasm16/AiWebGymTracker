@@ -4,16 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AiWebGymTracker.Models
 {
-    public class Nutritions
+    public class Nutrition
     {
         [Key]
         [Column("id")]
         public int Id { get; set; }
         
-        [Column("dish_id")]
-        public int DishId { get; set; }
-
-        public Dish Dish { get; set; }
+        public List<Dish> Dishes { get; set; }
 
         [Column("user_id")]
         public int UserId { get; set; }

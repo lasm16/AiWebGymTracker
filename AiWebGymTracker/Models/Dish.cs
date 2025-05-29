@@ -8,7 +8,7 @@ namespace AiWebGymTracker.Models
         [Key]
         [Column("id")]
         public int Id { get; set; }
-        //public Meal Meal { get; set; }
+        public List<Food> Food { get; set; }
         [Column("weight")]
         public int Weight { get; set; }
     }
