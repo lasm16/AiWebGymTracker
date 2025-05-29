@@ -1,25 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AiWebGymTracker.Models
 {
-    public class NutritionSets
+    public class Nutritions
     {
         [Key]
         [Column("id")]
         public int Id { get; set; }
         
-        [Column("nutrition_id")]
-        public int NutritionId { get; set; }
+        [Column("dish_id")]
+        public int DishId { get; set; }
 
-        public Nutrition Nutrition { get; set; }
+        public Dish Dish { get; set; }
 
         [Column("user_id")]
         public int UserId { get; set; }
-
-        //public User User { get; set; }
+        public ApplicationUser User { get; set; }
 
         [Column("nutrition_type")]
         public NutritionType NutritionType { get; set; }
