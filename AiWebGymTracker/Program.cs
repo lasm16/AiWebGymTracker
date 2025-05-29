@@ -1,3 +1,5 @@
+using AiGymTracker.WebApp.Extensions;
+using AiGymTracker.WebApp.HostedServices;
 using AiWebGymTracker.Abstractions;
 using AiWebGymTracker.DAL;
 using AiWebGymTracker.Infrastructure.Configurers;
@@ -18,14 +20,11 @@ namespace AiWebGymTracker
             var builder = WebApplication.CreateBuilder(args);
             
             builder.Services.AddControllersWithViews();
-            
-            builder.Services.AddDbContext<AppDbContext>((provider, options) =>
-            {
-                var configuration = provider.GetRequiredService<IConfiguration>();
-                var connectionString = configuration.GetConnectionString("Npgsql");
-                options.UseNpgsql(connectionString);
-            });
-    
+
+            builder.Services.AddHostedService<HostedService>();
+
+            builder.Services.RegisterContext(builder.Configuration);
+
             builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
