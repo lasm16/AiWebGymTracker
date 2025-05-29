@@ -1,8 +1,7 @@
-﻿
-using AiWebGymTracker.DAL;
+﻿using AiWebGymTracker.DAL;
 using AiWebGymTracker.Models;
 
-namespace AiGymTracker.WebApp.HostedServices
+namespace AiWebGymTracker.HostedServices
 {
     /// <summary>
     /// Для проверки работоспособности подключенной базы базы
@@ -22,17 +21,17 @@ namespace AiGymTracker.WebApp.HostedServices
             {
                 using (var scope = _sp.CreateScope())
                 {
-                    var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+                    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-                    var model = new Nutrition()
+                    var model = new Dish()
                     {
                         Id = 0,
-                        Count = 100 * new Random().Next()
+                        Weight = 100 * new Random().Next()
                     };
 
-                    var nutritions = context.Nutrition.ToList();
+                    var nutritions = context.Dishes.ToList();
 
-                    var added = await context.Nutrition.AddAsync(model);
+                    var added = await context.Dishes.AddAsync(model);
 
                     await context.SaveChangesAsync();
                 }

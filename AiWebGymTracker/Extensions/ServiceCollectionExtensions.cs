@@ -1,7 +1,7 @@
 ﻿using AiWebGymTracker.DAL;
 using Microsoft.EntityFrameworkCore;
 
-namespace AiGymTracker.WebApp.Extensions
+namespace AiWebGymTracker.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -9,7 +9,7 @@ namespace AiGymTracker.WebApp.Extensions
         {
             var connectionString = config.GetConnectionString("Npgsql");
 
-            services.AddDbContext<ApplicationContext>(x => x.UseNpgsql(connectionString));
+            services.AddDbContext<AppDbContext>(x => x.UseNpgsql(connectionString));
 
             return services;
         }
