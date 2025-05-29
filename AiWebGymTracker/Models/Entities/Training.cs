@@ -1,14 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using AiWebGymTracker.Models.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AiWebGymTracker.Models
+namespace AiWebGymTracker.Models.Entities
 {
-    public class Training
+    public class Training : Entity
     {
-        [Key]
-        [Column("id")]
-        public int Id { get; set; }
-
         [Column("coach_id")]
         public int CoachId { get; set; }
         public ApplicationUser? Coach { get; set; }

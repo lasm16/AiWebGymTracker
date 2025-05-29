@@ -1,6 +1,5 @@
-using System.Security.Claims;
 using AiWebGymTracker.Abstractions;
-using AiWebGymTracker.Models;
+using AiWebGymTracker.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace AiWebGymTracker.Infrastructure.Services;

@@ -1,12 +1,11 @@
+using AiWebGymTracker.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AiWebGymTracker.Models
+namespace AiWebGymTracker.Models.Entities
 {
-    public class Food
+    public class Food : Entity
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         [MaxLength(100)]
         [Column("name")]
