@@ -1,15 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
+﻿using AiWebGymTracker.Models.Enums;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AiWebGymTracker.Models
+namespace AiWebGymTracker.Models.Entities
 {
-    public class Nutrition
+    public class Nutrition : Entity
     {
-        [Key]
-        [Column("id")]
-        public int Id { get; set; }
-        
         public List<Dish> Dishes { get; set; }
 
         [Column("user_id")]

@@ -1,4 +1,4 @@
-﻿namespace AiWebGymTracker.Models
+﻿namespace AiWebGymTracker.Models.Enums
 {
     public enum FoodCategory
     {

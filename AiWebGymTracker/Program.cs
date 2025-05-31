@@ -6,6 +6,7 @@ using AiWebGymTracker.Infrastructure.Configurers;
 using AiWebGymTracker.Infrastructure.Services;
 using AiWebGymTracker.Middleware;
 using AiWebGymTracker.Models;
+using AiWebGymTracker.Models.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;

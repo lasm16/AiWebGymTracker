@@ -1,5 +1,6 @@
 ﻿using AiWebGymTracker.DAL;
 using AiWebGymTracker.Models;
+using AiWebGymTracker.Models.Entities;
 
 namespace AiWebGymTracker.HostedServices
 {

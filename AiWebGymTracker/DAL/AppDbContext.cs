@@ -1,4 +1,4 @@
-using AiWebGymTracker.Models;
+using AiWebGymTracker.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
