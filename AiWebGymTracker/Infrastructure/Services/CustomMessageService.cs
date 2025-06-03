@@ -1,13 +1,25 @@
 using AiWebGymTracker.Abstractions;
+using AiWebGymTracker.Enums;
 
 namespace AiWebGymTracker.Infrastructure.Services;
 
 public class CustomMessageService : ICustomMessageProvider
 {
-    public string UnauthorizedErrorMessage => GetUnauthorizedErrorMessage();
+    private readonly Dictionary<CustomMessageTypes, Func<string>> _handlers = 
+        new Dictionary<CustomMessageTypes, Func<string>>
+        {
+            { CustomMessageTypes.SignInFailed, () => "Пароль или логин введены неверно"}
+        };
 
-    private static string GetUnauthorizedErrorMessage()
+    public string GetMessage(CustomMessageTypes type)
     {
-        return "Логин или пароль ведены неверно";
+        if (_handlers.TryGetValue(type, out var handler))
+        {
+            return handler();
+        }
+        else
+        {
+            throw new KeyNotFoundException($"Не обнаржуен делегат для типа {type.ToString()}");
+        }
     }
 }

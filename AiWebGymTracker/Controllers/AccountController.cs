@@ -1,4 +1,5 @@
 using AiWebGymTracker.Abstractions;
+using AiWebGymTracker.Enums;
 using AiWebGymTracker.Models;
 using AiWebGymTracker.Models.DTO.AuthDTO;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +47,7 @@ public class AccountController(IAccountService accountService, ICustomMessagePro
             return RedirectToAction("index", "Home");
         }
         
-        ModelState.AddModelError(string.Empty, messageProvider.UnauthorizedErrorMessage);
+        ModelState.AddModelError(string.Empty, _customMessageProvider.GetMessage(CustomMessageTypes.SignInFailed));
 
         return View("Auth", new AuthModel());
     }

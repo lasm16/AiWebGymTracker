@@ -1,6 +1,8 @@
+using AiWebGymTracker.Enums;
+
 namespace AiWebGymTracker.Abstractions;
 
 public interface ICustomMessageProvider
 {
-    string UnauthorizedErrorMessage { get; }
+    public string GetMessage(CustomMessageTypes type);
 }
