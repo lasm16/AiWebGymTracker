@@ -1,4 +1,5 @@
-﻿using AiWebGymTracker.Models.Enums;
+﻿using AiWebGymTracker.Models.Abstractions;
+using AiWebGymTracker.Models.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 
