@@ -6,7 +6,7 @@ namespace AiWebGymTracker.Models.Entities
     public class Entity : IEntity
     {
         [Key]
-        [Column("column")]
+        [Column("id")]
         public int Id { get; set; }
     }
 }
