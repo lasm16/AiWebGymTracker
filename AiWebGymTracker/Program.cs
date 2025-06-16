@@ -21,7 +21,7 @@ namespace AiWebGymTracker
             
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddHostedService<HostedService>();
+            //builder.Services.AddHostedService<HostedService>();
 
             builder.Services.RegisterContext(builder.Configuration);
 
