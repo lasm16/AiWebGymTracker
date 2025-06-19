@@ -1,4 +1,5 @@
-﻿using AiWebGymTracker.Models.Enums;
+﻿using AiWebGymTracker.Models.Abstractions;
+using AiWebGymTracker.Models.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AiWebGymTracker.Models.Entities
