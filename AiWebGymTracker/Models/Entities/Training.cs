@@ -20,5 +20,7 @@ namespace AiWebGymTracker.Models.Entities
 
         [Column("status")]
         public TrainingType TrainingType { get; set; }
+        [Column("exercises")]
+        public List<Exercise> Exercises { get; set; } = new List<Exercise>();
     }
 }
