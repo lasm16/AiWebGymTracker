@@ -32,6 +32,7 @@ namespace AiWebGymTracker
     
             builder.Services.AddAuthentication().AddCookie();
             builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<ICustomMessageProvider, CustomMessageService>();
             builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
     
             var app = builder.Build();

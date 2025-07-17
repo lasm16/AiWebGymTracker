@@ -1,13 +1,15 @@
 using AiWebGymTracker.Abstractions;
+using AiWebGymTracker.Enums;
 using AiWebGymTracker.Models;
 using AiWebGymTracker.Models.DTO.AuthDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AiWebGymTracker.Controllers;
 
-public class AccountController(IAccountService accountService) : Controller
+public class AccountController(IAccountService accountService, ICustomMessageProvider messageProvider) : Controller
 {
     private readonly IAccountService _accountService = accountService;
+    private readonly ICustomMessageProvider _customMessageProvider = messageProvider;
 
     [HttpGet]
     public IActionResult Auth()
@@ -45,7 +47,7 @@ public class AccountController(IAccountService accountService) : Controller
             return RedirectToAction("index", "Home");
         }
         
-        ModelState.AddModelError(string.Empty, "Логин или пароль ведены неверно");
+        ModelState.AddModelError(string.Empty, _customMessageProvider.GetMessage(CustomMessageTypes.SignInFailed));
 
         return View("Auth", new AuthModel());
     }
