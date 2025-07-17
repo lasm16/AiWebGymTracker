@@ -1,4 +1,4 @@
-﻿namespace AiWebGymTracker.Models.Entities
+﻿namespace AiWebGymTracker.Models.Abstractions
 {
     public interface IEntity
     {

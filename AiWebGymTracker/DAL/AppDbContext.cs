@@ -8,6 +8,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 {
     public DbSet<Dish> Dishes { get; set; }
     public DbSet<Training> Trainings { get; set; }
+    public DbSet<Food> Foods { get; set; }
+  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var entity in modelBuilder.Model.GetEntityTypes())

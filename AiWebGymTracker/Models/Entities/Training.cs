@@ -1,4 +1,5 @@
-﻿using AiWebGymTracker.Models.Enums;
+﻿using AiWebGymTracker.Models.Abstractions;
+using AiWebGymTracker.Models.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AiWebGymTracker.Models.Entities
@@ -20,5 +21,7 @@ namespace AiWebGymTracker.Models.Entities
 
         [Column("status")]
         public TrainingType TrainingType { get; set; }
+        [Column("exercises")]
+        public List<Exercise> Exercises { get; set; } = new List<Exercise>();
     }
 }
