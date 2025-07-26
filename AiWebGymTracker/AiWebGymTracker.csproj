@@ -5,6 +5,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>3a6737ee-b431-4005-8f7a-75bed3de885a</UserSecretsId>
+
+	  <ShadowStackEnabled>false</ShadowStackEnabled>
+	  <CETCompat>false</CETCompat>
+	  <WindowsEnableShadowStacks>false</WindowsEnableShadowStacks>
   </PropertyGroup>
 
   <ItemGroup>

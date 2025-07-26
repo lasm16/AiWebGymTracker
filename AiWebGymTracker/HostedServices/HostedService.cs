@@ -18,27 +18,27 @@ namespace AiWebGymTracker.HostedServices
         
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                using (var scope = _sp.CreateScope())
-                {
-                    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            //while (!stoppingToken.IsCancellationRequested)
+            //{
+            //    using (var scope = _sp.CreateScope())
+            //    {
+            //        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-                    var model = new Dish()
-                    {
-                        Id = 0,
-                        Weight = 100 * new Random().Next()
-                    };
+            //        var model = new Dish()
+            //        {
+            //            Id = 0,
+            //            Weight = 100 * new Random().Next()
+            //        };
 
-                    var nutritions = context.Dishes.ToList();
+            //        var nutritions = context.Dishes.ToList();
 
-                    var added = await context.Dishes.AddAsync(model);
+            //        var added = await context.Dishes.AddAsync(model);
 
-                    await context.SaveChangesAsync();
-                }
+            //        await context.SaveChangesAsync();
+            //    }
 
-                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
-            }
+            //    await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+            //}
         }
     }
 }
