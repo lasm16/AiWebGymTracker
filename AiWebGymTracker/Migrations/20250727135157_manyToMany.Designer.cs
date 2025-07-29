@@ -3,6 +3,7 @@ using System;
 using AiWebGymTracker.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AiWebGymTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250727135157_manyToMany")]
+    partial class manyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,7 +126,7 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -132,13 +135,18 @@ namespace AiWebGymTracker.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<int?>("NutritionId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Weight")
                         .HasColumnType("integer")
                         .HasColumnName("weight");
 
                     b.HasKey("Id");
 
-                    b.ToTable("dishes", (string)null);
+                    b.HasIndex("NutritionId");
+
+                    b.ToTable("dishes");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Exercise", b =>
@@ -146,7 +154,7 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -191,7 +199,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("Training_Id");
 
-                    b.ToTable("exercise", (string)null);
+                    b.ToTable("exercise");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Food", b =>
@@ -199,7 +207,7 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -249,7 +257,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("foods", (string)null);
+                    b.ToTable("foods");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Nutrition", b =>
@@ -257,13 +265,9 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DishId")
-                        .HasColumnType("integer")
-                        .HasColumnName("dish_id");
 
                     b.Property<int>("NutritionType")
                         .HasColumnType("integer")
@@ -275,7 +279,9 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("nutritions", (string)null);
+                    b.HasIndex("UserId");
+
+                    b.ToTable("nutritions");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Training", b =>
@@ -283,7 +289,7 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -313,7 +319,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("TraineeId");
 
-                    b.ToTable("trainings", (string)null);
+                    b.ToTable("trainings");
                 });
 
             modelBuilder.Entity("DishFood", b =>
@@ -328,7 +334,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("FoodsId");
 
-                    b.ToTable("dishfood", (string)null);
+                    b.ToTable("dishfood");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -434,6 +440,13 @@ namespace AiWebGymTracker.Migrations
                     b.ToTable("aspnetusertokens", (string)null);
                 });
 
+            modelBuilder.Entity("AiWebGymTracker.Models.Entities.Dish", b =>
+                {
+                    b.HasOne("AiWebGymTracker.Models.Entities.Nutrition", null)
+                        .WithMany("Dishes")
+                        .HasForeignKey("NutritionId");
+                });
+
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Exercise", b =>
                 {
                     b.HasOne("AiWebGymTracker.Models.Entities.Training", "Training")
@@ -441,6 +454,17 @@ namespace AiWebGymTracker.Migrations
                         .HasForeignKey("Training_Id");
 
                     b.Navigation("Training");
+                });
+
+            modelBuilder.Entity("AiWebGymTracker.Models.Entities.Nutrition", b =>
+                {
+                    b.HasOne("AiWebGymTracker.Models.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Training", b =>
@@ -526,6 +550,11 @@ namespace AiWebGymTracker.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AiWebGymTracker.Models.Entities.Nutrition", b =>
+                {
+                    b.Navigation("Dishes");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Training", b =>

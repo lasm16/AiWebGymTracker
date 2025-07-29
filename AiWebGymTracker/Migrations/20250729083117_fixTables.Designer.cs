@@ -3,6 +3,7 @@ using System;
 using AiWebGymTracker.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AiWebGymTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250729083117_fixTables")]
+    partial class fixTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,7 +126,7 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -138,7 +141,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("dishes", (string)null);
+                    b.ToTable("dishes");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Exercise", b =>
@@ -146,7 +149,7 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -191,7 +194,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("Training_Id");
 
-                    b.ToTable("exercise", (string)null);
+                    b.ToTable("exercise");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Food", b =>
@@ -199,7 +202,7 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -249,33 +252,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("foods", (string)null);
-                });
-
-            modelBuilder.Entity("AiWebGymTracker.Models.Entities.Nutrition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DishId")
-                        .HasColumnType("integer")
-                        .HasColumnName("dish_id");
-
-                    b.Property<int>("NutritionType")
-                        .HasColumnType("integer")
-                        .HasColumnName("nutrition_type");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("nutritions", (string)null);
+                    b.ToTable("foods");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Training", b =>
@@ -283,7 +260,7 @@ namespace AiWebGymTracker.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("column");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -313,7 +290,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("TraineeId");
 
-                    b.ToTable("trainings", (string)null);
+                    b.ToTable("trainings");
                 });
 
             modelBuilder.Entity("DishFood", b =>
@@ -328,7 +305,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("FoodsId");
 
-                    b.ToTable("dishfood", (string)null);
+                    b.ToTable("dishfood");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

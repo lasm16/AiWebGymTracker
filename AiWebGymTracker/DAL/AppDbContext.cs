@@ -15,7 +15,9 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
     public DbSet<Dish> Dishes { get; set; }
     public DbSet<Training> Trainings { get; set; }
     public DbSet<Food> Foods { get; set; }
-  
+    public DbSet<Nutrition> Nutritions { get; set; }
+    public DbSet<Exercise> Exercises { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

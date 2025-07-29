@@ -34,5 +34,7 @@ namespace AiWebGymTracker.Models.Entities
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
         [Column("image_url")]
         public string ImageUrl { get; set; } = string.Empty;
+        [Column("dish_id")]
+        public List<Dish> Dishes { get; set; } = [];
     }
 }

@@ -6,7 +6,7 @@ namespace AiWebGymTracker.Models.Abstractions
     public interface IEntity
     {
         [Key]
-        [Column("column")]
+        [Column("id")]
         int Id { get; set; }
     }
 }

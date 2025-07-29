@@ -3,6 +3,7 @@ using System;
 using AiWebGymTracker.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AiWebGymTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250729083617_fixTables2")]
+    partial class fixTables2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +141,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("dishes", (string)null);
+                    b.ToTable("dishes");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Exercise", b =>
@@ -191,7 +194,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("Training_Id");
 
-                    b.ToTable("exercise", (string)null);
+                    b.ToTable("exercise");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Food", b =>
@@ -249,7 +252,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("foods", (string)null);
+                    b.ToTable("foods");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Nutrition", b =>
@@ -275,7 +278,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("nutritions", (string)null);
+                    b.ToTable("nutritions");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Training", b =>
@@ -313,7 +316,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("TraineeId");
 
-                    b.ToTable("trainings", (string)null);
+                    b.ToTable("trainings");
                 });
 
             modelBuilder.Entity("DishFood", b =>
@@ -328,7 +331,7 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasIndex("FoodsId");
 
-                    b.ToTable("dishfood", (string)null);
+                    b.ToTable("dishfood");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
