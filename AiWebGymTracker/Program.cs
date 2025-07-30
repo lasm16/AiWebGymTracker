@@ -1,15 +1,11 @@
-using AiWebGymTracker.Abstractions;
 using AiWebGymTracker.DAL;
 using AiWebGymTracker.Extensions;
 using AiWebGymTracker.HostedServices;
-using AiWebGymTracker.Infrastructure.Configurers;
+using AiWebGymTracker.Infrastructure.Abstractions;
 using AiWebGymTracker.Infrastructure.Services;
 using AiWebGymTracker.Middleware;
-using AiWebGymTracker.Models;
 using AiWebGymTracker.Models.Entities;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 
 namespace AiWebGymTracker
 {
@@ -29,11 +25,16 @@ namespace AiWebGymTracker
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+            
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = builder.Configuration["CookieSettings:LoginPath"];
+                options.AccessDeniedPath = builder.Configuration["CookieSettings:AccessDeniedPath"];
+            });
     
             builder.Services.AddAuthentication().AddCookie();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ICustomMessageProvider, CustomMessageService>();
-            builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
     
             var app = builder.Build();
             

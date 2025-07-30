@@ -1,18 +1,24 @@
-﻿@model AiWebGymTracker.Enums.UserServices
+﻿@using AiWebGymTracker.Enums
+@using AiWebGymTracker.Enums.PagesActionTypes
+@using AiWebGymTracker.Infrastructure.Utils.WebRouters
+@model AiWebGymTracker.Enums.PagesActionTypes.MainPageActionTypes
 
 @{
     ViewData["Title"] = "Home Page";
 }
 <div id="content">
     <div class="service-container">
-        @foreach (var service in Enum.GetValues(typeof(AiWebGymTracker.Enums.UserServices)))
+        @foreach (var service in Enum.GetValues(typeof(MainPageActionTypes)))
         {
-            <div class="service">
-                <div class="icon" aria-hidden="true"><i class="fas fa-plus-circle"></i></div>
-                <div class="text-content">
-                    <h3 class="title">@service.ToString()</h3>
-                </div>
-            </div>
+            var (controller, action) = PageRouter.GetRoute((MainPageActionTypes)service);
+            <form asp-controller="@controller" asp-action="@action" method="post">
+                <button type="submit" class="service">
+                        <div class="icon"><i class="fas fa-plus-circle"></i></div>
+                        <div class="text-content">
+                            <h3 class="title">@service.ToString()</h3>
+                    </div>
+                </button>
+            </form>
         }
     </div> 
 </div>

@@ -1,5 +1,5 @@
-using AiWebGymTracker.Abstractions;
 using AiWebGymTracker.Enums;
+using AiWebGymTracker.Infrastructure.Abstractions;
 using AiWebGymTracker.Models;
 using AiWebGymTracker.Models.DTO.AuthDTO;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ public class AccountController(IAccountService accountService, ICustomMessagePro
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> RegisterUser([Bind(Prefix = "RegisterUser")] RegisterUserDto dto)
+    public async Task<IActionResult> RegisterUser([Bind(Prefix = "RegisterFrom")] RegisterUserDto dto)
     {
         var result = await _accountService.RegisterAsync(dto.Email, dto.Password, dto.Username);
 
@@ -38,7 +38,7 @@ public class AccountController(IAccountService accountService, ICustomMessagePro
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SignInUser([Bind(Prefix = "SigninUser")] SignInUserDto dto)
+    public async Task<IActionResult> SignInUser([Bind(Prefix = "SignInForm")] SignInUserDto dto)
     {
         var result = await _accountService.LogInAsync(dto.Email, dto.Password);
 
@@ -56,6 +56,8 @@ public class AccountController(IAccountService accountService, ICustomMessagePro
     public async Task<IActionResult> SignOutUser()
     {
         await _accountService.LogOutAsync();
+        
+        Console.WriteLine("User has been logged out");
         
         return RedirectToAction("Auth", "Account");
     }

@@ -1,5 +1,5 @@
-using AiWebGymTracker.Abstractions;
 using AiWebGymTracker.Enums;
+using AiWebGymTracker.Infrastructure.Abstractions;
 
 namespace AiWebGymTracker.Infrastructure.Services;
 
