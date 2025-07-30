@@ -6,6 +6,13 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+
+<div style="text-align: right; padding: 10px;">
+    <a href="/api" class="btn btn-primary" target="_blank">
+        <i class="fas fa-book"></i> API Documentation
+    </a>
+</div>
+
 <div id="content">
     <div class="service-container">
         @foreach (var service in Enum.GetValues(typeof(MainPageActionTypes)))
@@ -20,5 +27,5 @@
                 </button>
             </form>
         }
-    </div> 
+    </div>
 </div>
