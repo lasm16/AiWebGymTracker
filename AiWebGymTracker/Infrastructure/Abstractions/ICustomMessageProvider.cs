@@ -1,6 +1,6 @@
 using AiWebGymTracker.Enums;
 
-namespace AiWebGymTracker.Abstractions;
+namespace AiWebGymTracker.Infrastructure.Abstractions;
 
 public interface ICustomMessageProvider
 {

@@ -1,8 +1,6 @@
-using System.Security.Claims;
-using AiWebGymTracker.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace AiWebGymTracker.Abstractions;
+namespace AiWebGymTracker.Infrastructure.Abstractions;
 
 public interface IAccountService
 {

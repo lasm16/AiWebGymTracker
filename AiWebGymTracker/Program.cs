@@ -1,7 +1,7 @@
-using AiWebGymTracker.Abstractions;
 using AiWebGymTracker.DAL;
 using AiWebGymTracker.Extensions;
 using AiWebGymTracker.HostedServices;
+using AiWebGymTracker.Infrastructure.Abstractions;
 using AiWebGymTracker.Infrastructure.Configurations;
 using AiWebGymTracker.Infrastructure.Configurers;
 using AiWebGymTracker.Infrastructure.Services;
@@ -33,11 +33,16 @@ namespace AiWebGymTracker
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+            
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = builder.Configuration["CookieSettings:LoginPath"];
+                options.AccessDeniedPath = builder.Configuration["CookieSettings:AccessDeniedPath"];
+            });
     
             builder.Services.AddAuthentication().AddCookie();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ICustomMessageProvider, CustomMessageService>();
-
             builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
 
             builder.Services.AddTransient<IAiService, YandexAiService>();
@@ -53,7 +58,6 @@ namespace AiWebGymTracker
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
             var app = builder.Build();
             
             if (!app.Environment.IsDevelopment())
