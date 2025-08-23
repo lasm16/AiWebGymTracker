@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using AiWebGymTracker.Models.Abstractions;
@@ -10,9 +9,9 @@ public class Exercise : Entity
 {
     [Required]
     [Column("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
     [Column("description")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
     [Column("type")]
     public ExerciseType Type { get; set; }
     [Range(0, int.MaxValue)]

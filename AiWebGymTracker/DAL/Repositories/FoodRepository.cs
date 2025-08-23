@@ -1,5 +1,3 @@
-using System;
-using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 using AiWebGymTracker.DAL.Repositories.Abstractions;

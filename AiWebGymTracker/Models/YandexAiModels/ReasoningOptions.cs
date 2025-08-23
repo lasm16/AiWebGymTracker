@@ -2,6 +2,6 @@
 {
     public class ReasoningOptions
     {
-        public string mode { get; set; }
+        public string? Mode { get; set; }
     }
 }

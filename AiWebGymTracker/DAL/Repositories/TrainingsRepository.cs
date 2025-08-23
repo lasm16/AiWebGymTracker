@@ -1,4 +1,5 @@
-﻿using AiWebGymTracker.Models.Entities;
+﻿using AiWebGymTracker.DAL.Repositories.Abstractions;
+using AiWebGymTracker.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AiWebGymTracker.DAL.Repositories

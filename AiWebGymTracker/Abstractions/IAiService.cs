@@ -1,6 +1,4 @@
-﻿
-
-using AiWebGymTracker.Models.BaseModels;
+﻿using AiWebGymTracker.Models.BaseModels;
 
 namespace AiWebGymTracker.Abstractions
 {

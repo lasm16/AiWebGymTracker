@@ -1,5 +1,3 @@
-using System;
-using AiWebGymTracker.Models.Entities;
 using AiWebGymTracker.DAL.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
