@@ -15,6 +15,6 @@ public class UnitOfWork : IUnitOfWork
     }
     public Task SavedChanged()
     {
-        throw new NotImplementedException();
+        return  _appdDbContext.SaveChangesAsync();
     }
 }

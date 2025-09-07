@@ -7,7 +7,7 @@ namespace AiWebGymTracker.Extensions
     {
         public static IServiceCollection RegisterContext(this IServiceCollection services, IConfiguration config)
         {
-            var connectionString = config.GetConnectionString("Npgsql");
+            var connectionString = config.GetConnectionString("DatabaseConnection");
 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 

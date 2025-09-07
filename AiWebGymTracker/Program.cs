@@ -3,13 +3,13 @@ using AiWebGymTracker.Extensions;
 using AiWebGymTracker.HostedServices;
 using AiWebGymTracker.Infrastructure.Abstractions;
 using AiWebGymTracker.Infrastructure.Configurations;
-using AiWebGymTracker.Infrastructure.Configurers;
 using AiWebGymTracker.Infrastructure.Services;
 using AiWebGymTracker.Middleware;
 using AiWebGymTracker.Models.Entities;
 using AiWebGymTracker.Models.Enums;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Net.Http.Headers;
@@ -22,7 +22,7 @@ namespace AiWebGymTracker
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddHostedService<HostedService>();
@@ -43,9 +43,9 @@ namespace AiWebGymTracker
             builder.Services.AddAuthentication().AddCookie();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ICustomMessageProvider, CustomMessageService>();
-            builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
+            //builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
 
-            builder.Services.AddTransient<IAiService, YandexAiService>();
+            //builder.Services.AddTransient<IAiService, YandexAiService>();
 
             builder.Services.Configure<YandexConfiguration>(builder.Configuration.GetSection("YandexConfiguration"));
 
@@ -59,7 +59,22 @@ namespace AiWebGymTracker
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             var app = builder.Build();
-            
+            // Автоматическое применение миграций
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<AppDbContext>();
+                    context.Database.Migrate(); // Применяет миграции автоматически
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while migrating the database.");
+                }
+            }
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -83,7 +98,19 @@ namespace AiWebGymTracker
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            
+            //Проверка подключения к базе данных
+            try
+            {
+                using var scope = app.Services.CreateScope();
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var canConnect = context.Database.CanConnect();
+                Console.WriteLine($"Database connection: {canConnect}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database connection failed: {ex.Message}");
+            }
             app.Run();
         }
     }
