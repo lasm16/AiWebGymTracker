@@ -1,15 +1,18 @@
+using AiWebGymTracker.Abstractions;
 using AiWebGymTracker.DAL;
 using AiWebGymTracker.Extensions;
 using AiWebGymTracker.HostedServices;
 using AiWebGymTracker.Infrastructure.Abstractions;
 using AiWebGymTracker.Infrastructure.Configurations;
-using AiWebGymTracker.Infrastructure.Configurers;
+//using AiWebGymTracker.Infrastructure.Configurers;
 using AiWebGymTracker.Infrastructure.Services;
 using AiWebGymTracker.Middleware;
 using AiWebGymTracker.Models.Entities;
 using AiWebGymTracker.Models.Enums;
+using AiWebGymTracker.Models.Seeding;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Net.Http.Headers;
@@ -19,14 +22,15 @@ namespace AiWebGymTracker
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddHostedService<HostedService>();
-
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.RegisterContext(builder.Configuration);
 
             builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
@@ -43,7 +47,7 @@ namespace AiWebGymTracker
             builder.Services.AddAuthentication().AddCookie();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ICustomMessageProvider, CustomMessageService>();
-            builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
+            //builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
 
             builder.Services.AddTransient<IAiService, YandexAiService>();
 
@@ -65,7 +69,17 @@ namespace AiWebGymTracker
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+                // Пересоздаем базу чтобы избежать конфликтов
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
+
+                // Заполняем тестовыми данными
+                await DataSeederExercise.SeedDevelopmentData(context);
+            }
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
