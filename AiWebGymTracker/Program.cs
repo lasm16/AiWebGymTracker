@@ -71,13 +71,7 @@ namespace AiWebGymTracker
             }
             using (var scope = app.Services.CreateScope())
             {
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-                // Пересоздаем базу чтобы избежать конфликтов
-                await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
-
-                // Заполняем тестовыми данными
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();                
                 await DataSeederExercise.SeedDevelopmentData(context);
             }
             app.UseMiddleware<ExceptionHandlingMiddleware>();

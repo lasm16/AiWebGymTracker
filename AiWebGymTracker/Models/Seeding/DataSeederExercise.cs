@@ -9,8 +9,7 @@ namespace AiWebGymTracker.Models.Seeding
     {
 
         public static async Task SeedDevelopmentData(AppDbContext context)
-        {
-            // Проверяем, есть ли уже данные
+        {            
             if (!await context.Exercises.AnyAsync())
             {
                 await SeedExercises(context);
@@ -61,7 +60,7 @@ namespace AiWebGymTracker.Models.Seeding
 
         private static async Task SeedExerciseTrainings(AppDbContext context)
 {
-    // Получаем первую созданную тренировку
+    
     var training = await context.Trainings.FirstOrDefaultAsync();
     
     if (training == null)
@@ -76,7 +75,7 @@ namespace AiWebGymTracker.Models.Seeding
         new()
         {
             ExerciseId = 1,
-            TrainingId = training.Id, // Используем реальный ID тренировки
+            TrainingId = training.Id, 
             Type = ExerciseType.Strength,
             Repetitions = 12,
             RangeRepetitions = 3,
@@ -86,7 +85,7 @@ namespace AiWebGymTracker.Models.Seeding
         new()
         {
             ExerciseId = 2,
-            TrainingId = training.Id, // Используем реальный ID тренировки
+            TrainingId = training.Id, 
             Type = ExerciseType.Strength,
             Repetitions = 10,
             RangeRepetitions = 4,
@@ -96,7 +95,7 @@ namespace AiWebGymTracker.Models.Seeding
         new()
         {
             ExerciseId = 10,
-            TrainingId = training.Id, // Используем реальный ID тренировки
+            TrainingId = training.Id, 
             Type = ExerciseType.Cardio,
             Repetitions = 0,
             RangeRepetitions = 0,
