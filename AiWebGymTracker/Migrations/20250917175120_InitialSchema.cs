@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AiWebGymTracker.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitialSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +51,71 @@ namespace AiWebGymTracker.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_aspnetusers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "dishes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    weight = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_dishes", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "exercises",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_exercises", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "foods",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false),
+                    calories = table.Column<double>(type: "double precision", nullable: false),
+                    protein = table.Column<double>(type: "double precision", nullable: false),
+                    fat = table.Column<double>(type: "double precision", nullable: false),
+                    carbohydrates = table.Column<double>(type: "double precision", nullable: false),
+                    food_category = table.Column<int>(type: "integer", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    image_url = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_foods", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "nutritions",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    dish_id = table.Column<int>(type: "integer", nullable: false),
+                    nutrition_type = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_nutritions", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,30 +225,10 @@ namespace AiWebGymTracker.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "nutritions",
-                columns: table => new
-                {
-                    column = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_id = table.Column<int>(type: "integer", nullable: false),
-                    nutrition_type = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_nutritions", x => x.column);
-                    table.ForeignKey(
-                        name: "FK_nutritions_aspnetusers_user_id",
-                        column: x => x.user_id,
-                        principalTable: "aspnetusers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "trainings",
                 columns: table => new
                 {
-                    column = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     coach_id = table.Column<int>(type: "integer", nullable: false),
                     trainee_id = table.Column<int>(type: "integer", nullable: false),
@@ -193,7 +238,7 @@ namespace AiWebGymTracker.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_trainings", x => x.column);
+                    table.PrimaryKey("PK_trainings", x => x.id);
                     table.ForeignKey(
                         name: "FK_trainings_aspnetusers_coach_id",
                         column: x => x.coach_id,
@@ -209,50 +254,51 @@ namespace AiWebGymTracker.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "dishes",
+                name: "dishfood",
                 columns: table => new
                 {
-                    column = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    weight = table.Column<int>(type: "integer", nullable: false),
-                    NutritionId = table.Column<int>(type: "integer", nullable: true)
+                    DishesId = table.Column<int>(type: "integer", nullable: false),
+                    FoodsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_dishes", x => x.column);
+                    table.PrimaryKey("PK_dishfood", x => new { x.DishesId, x.FoodsId });
                     table.ForeignKey(
-                        name: "FK_dishes_nutritions_NutritionId",
-                        column: x => x.NutritionId,
-                        principalTable: "nutritions",
-                        principalColumn: "column");
+                        name: "FK_dishfood_dishes_DishesId",
+                        column: x => x.DishesId,
+                        principalTable: "dishes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_dishfood_foods_FoodsId",
+                        column: x => x.FoodsId,
+                        principalTable: "foods",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "foods",
+                name: "exercisetrainings",
                 columns: table => new
                 {
-                    column = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false),
-                    calories = table.Column<double>(type: "double precision", nullable: false),
-                    protein = table.Column<double>(type: "double precision", nullable: false),
-                    fat = table.Column<double>(type: "double precision", nullable: false),
-                    carbohydrates = table.Column<double>(type: "double precision", nullable: false),
-                    food_category = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    image_url = table.Column<string>(type: "text", nullable: false),
-                    DishId = table.Column<int>(type: "integer", nullable: true)
+                    exercise_id = table.Column<int>(type: "integer", nullable: false),
+                    type = table.Column<int>(type: "integer", nullable: false),
+                    repetitions = table.Column<int>(type: "integer", nullable: false),
+                    range_repetitions = table.Column<int>(type: "integer", nullable: false),
+                    duration = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    weight = table.Column<double>(type: "double precision", nullable: false),
+                    training_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_foods", x => x.column);
+                    table.PrimaryKey("PK_exercisetrainings", x => x.id);
                     table.ForeignKey(
-                        name: "FK_foods_dishes_DishId",
-                        column: x => x.DishId,
-                        principalTable: "dishes",
-                        principalColumn: "column");
+                        name: "FK_exercisetrainings_trainings_training_id",
+                        column: x => x.training_id,
+                        principalTable: "trainings",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -293,19 +339,14 @@ namespace AiWebGymTracker.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_dishes_NutritionId",
-                table: "dishes",
-                column: "NutritionId");
+                name: "IX_dishfood_FoodsId",
+                table: "dishfood",
+                column: "FoodsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_foods_DishId",
-                table: "foods",
-                column: "DishId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_nutritions_user_id",
-                table: "nutritions",
-                column: "user_id");
+                name: "IX_exercisetrainings_training_id",
+                table: "exercisetrainings",
+                column: "training_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_trainings_coach_id",
@@ -337,10 +378,16 @@ namespace AiWebGymTracker.Migrations
                 name: "aspnetusertokens");
 
             migrationBuilder.DropTable(
-                name: "foods");
+                name: "dishfood");
 
             migrationBuilder.DropTable(
-                name: "trainings");
+                name: "exercises");
+
+            migrationBuilder.DropTable(
+                name: "exercisetrainings");
+
+            migrationBuilder.DropTable(
+                name: "nutritions");
 
             migrationBuilder.DropTable(
                 name: "aspnetroles");
@@ -349,7 +396,10 @@ namespace AiWebGymTracker.Migrations
                 name: "dishes");
 
             migrationBuilder.DropTable(
-                name: "nutritions");
+                name: "foods");
+
+            migrationBuilder.DropTable(
+                name: "trainings");
 
             migrationBuilder.DropTable(
                 name: "aspnetusers");

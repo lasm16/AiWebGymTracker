@@ -8,7 +8,9 @@ namespace AiWebGymTracker.Models.Entities
     {
         [Column("coach_id")]
         public int CoachId { get; set; }
+        [ForeignKey("CoachId")]
         public ApplicationUser? Coach { get; set; }
+
         [Column("trainee_id")]
         public int TraineeId { get; set; }
         public ApplicationUser Trainee { get; set; }
@@ -21,7 +23,7 @@ namespace AiWebGymTracker.Models.Entities
 
         [Column("status")]
         public TrainingType TrainingType { get; set; }
-        [Column("exercise_id")]
-        public List<Exercise> Exercises { get; set; } = [];
+       
+        public List<ExerciseTraining> ExerciseTrainings { get; set; } = new List<ExerciseTraining>();
     }
 }

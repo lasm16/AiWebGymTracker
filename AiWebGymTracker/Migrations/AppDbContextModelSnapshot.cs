@@ -155,14 +155,32 @@ namespace AiWebGymTracker.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("interval")
-                        .HasColumnName("duration");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("exercises");
+                });
+
+            modelBuilder.Entity("AiWebGymTracker.Models.Entities.ExerciseTraining", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("interval")
+                        .HasColumnName("duration");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("exercise_id");
 
                     b.Property<int>("RangeRepetitions")
                         .HasColumnType("integer")
@@ -172,12 +190,9 @@ namespace AiWebGymTracker.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("repetitions");
 
-                    b.Property<int>("TrainingId")
+                    b.Property<int?>("TrainingId")
                         .HasColumnType("integer")
                         .HasColumnName("training_id");
-
-                    b.Property<int?>("Training_Id")
-                        .HasColumnType("integer");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer")
@@ -189,9 +204,9 @@ namespace AiWebGymTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Training_Id");
+                    b.HasIndex("TrainingId");
 
-                    b.ToTable("exercises");
+                    b.ToTable("exercisetrainings");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Food", b =>
@@ -434,11 +449,11 @@ namespace AiWebGymTracker.Migrations
                     b.ToTable("aspnetusertokens", (string)null);
                 });
 
-            modelBuilder.Entity("AiWebGymTracker.Models.Entities.Exercise", b =>
+            modelBuilder.Entity("AiWebGymTracker.Models.Entities.ExerciseTraining", b =>
                 {
                     b.HasOne("AiWebGymTracker.Models.Entities.Training", "Training")
-                        .WithMany("Exercises")
-                        .HasForeignKey("Training_Id");
+                        .WithMany("ExerciseTrainings")
+                        .HasForeignKey("TrainingId");
 
                     b.Navigation("Training");
                 });
@@ -530,7 +545,7 @@ namespace AiWebGymTracker.Migrations
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Training", b =>
                 {
-                    b.Navigation("Exercises");
+                    b.Navigation("ExerciseTrainings");
                 });
 #pragma warning restore 612, 618
         }
