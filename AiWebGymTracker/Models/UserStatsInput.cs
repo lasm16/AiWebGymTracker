@@ -1,5 +1,4 @@
-﻿
-using AiWebGymTracker.Models.BaseModels;
+﻿using AiWebGymTracker.Models.BaseModels;
 using AiWebGymTracker.Models.Enums;
 
 namespace AiWebGymTracker.Models

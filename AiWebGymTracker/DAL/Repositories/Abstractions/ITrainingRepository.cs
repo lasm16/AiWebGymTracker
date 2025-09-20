@@ -1,7 +1,6 @@
-﻿using AiWebGymTracker.DAL.Repositories.Abstractions;
-using AiWebGymTracker.Models.Entities;
+﻿using AiWebGymTracker.Models.Entities;
 
-namespace AiWebGymTracker.DAL
+namespace AiWebGymTracker.DAL.Repositories.Abstractions
 {
     public interface ITrainingRepository : IRepository<Training>
     {

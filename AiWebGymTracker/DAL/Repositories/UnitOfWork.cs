@@ -1,4 +1,3 @@
-using System;
 using AiWebGymTracker.DAL.Repositories.Abstractions;
 
 namespace AiWebGymTracker.DAL.Repositories;

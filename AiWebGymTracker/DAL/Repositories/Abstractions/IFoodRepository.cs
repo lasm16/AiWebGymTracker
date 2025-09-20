@@ -1,4 +1,3 @@
-using System;
 using AiWebGymTracker.Models.Entities;
 
 namespace AiWebGymTracker.DAL.Repositories.Abstractions;

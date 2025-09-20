@@ -1,5 +1,3 @@
-using System;
-
 namespace AiWebGymTracker.DAL.Repositories.Abstractions;
 
 public interface IUnitOfWork

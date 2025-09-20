@@ -1,10 +1,10 @@
-﻿using AiWebGymTracker.Abstractions;
+using AiWebGymTracker.Abstractions;
+using AiWebGymTracker.Configures;
 using AiWebGymTracker.DAL;
 using AiWebGymTracker.Extensions;
 using AiWebGymTracker.HostedServices;
 using AiWebGymTracker.Infrastructure.Abstractions;
 using AiWebGymTracker.Infrastructure.Configurations;
-using AiWebGymTracker.Infrastructure.Configurers;
 using AiWebGymTracker.Infrastructure.Services;
 using AiWebGymTracker.Middleware;
 using AiWebGymTracker.Models.Entities;
@@ -14,9 +14,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using System.Net.Http.Headers;
-using System.Reflection;
 
 namespace AiWebGymTracker
 {

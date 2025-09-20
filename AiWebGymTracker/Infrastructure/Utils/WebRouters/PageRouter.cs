@@ -1,7 +1,5 @@
 using System.Reflection;
 using AiWebGymTracker.Attributes;
-using AiWebGymTracker.Enums;
-
 
 namespace AiWebGymTracker.Infrastructure.Utils.WebRouters;
 

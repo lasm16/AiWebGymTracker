@@ -23,18 +23,5 @@ namespace AiWebGymTracker.Controllers
             var response = await _aiService.AskAi<UserStatsInput, object>(input);
             return Ok(response);
         }
-        //      {
-        //"messages": [
-        //  "Параметры пользователя для составления плана тренировок. Представь, что ты - фитнесс тренер"
-        //],
-        //"age": 24,
-        //"weight": 81,
-        //"height": 193,
-        //"gender": 1,
-        //"level": 1,
-        //"goals": [
-        //  "накачать мышцы"
-        //]
-        //  }
     }
 }

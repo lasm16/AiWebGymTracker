@@ -1,4 +1,3 @@
-using AiWebGymTracker.Models.DTO;
 using AiWebGymTracker.Models.DTO.AuthDTO;
 
 namespace AiWebGymTracker.Models;
