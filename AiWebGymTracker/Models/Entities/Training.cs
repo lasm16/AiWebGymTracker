@@ -6,14 +6,14 @@ namespace AiWebGymTracker.Models.Entities
 {
     public class Training : Entity
     {
-        //[Column("coach_id")]
-        //public int CoachId { get; set; }
-        //[ForeignKey("CoachId")]
-        //public ApplicationUser? Coach { get; set; }
+        [Column("coach_id")]
+        public int CoachId { get; set; }
+        [ForeignKey("CoachId")]
+        public ApplicationUser? Coach { get; set; }
 
-        //[Column("trainee_id")]
-        //public int TraineeId { get; set; }
-        //public ApplicationUser Trainee { get; set; }
+        [Column("trainee_id")]
+        public int TraineeId { get; set; }
+        public ApplicationUser Trainee { get; set; }
 
         [Column("start_training")]
         public DateTime DateTimeStart { get; set; }
@@ -23,7 +23,7 @@ namespace AiWebGymTracker.Models.Entities
 
         [Column("status")]
         public TrainingType TrainingType { get; set; }
-        [Column("exercise_id")]
+       
         public List<ExerciseTraining> ExerciseTrainings { get; set; } = new List<ExerciseTraining>();
     }
 }

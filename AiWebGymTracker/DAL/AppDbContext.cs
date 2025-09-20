@@ -31,27 +31,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
         foreach (var entity in modelBuilder.Model.GetEntityTypes())
         {
             entity.SetTableName(entity.GetTableName().ToLower());
-        }
-
-        modelBuilder.Entity<ExerciseTraining>()
-        .HasOne(et => et.Exercise)
-        .WithMany(e => e.ExerciseTrainings)
-        .HasForeignKey(et => et.ExerciseId)
-        .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<ExerciseTraining>()
-            .HasOne(et => et.Training)
-            .WithMany(t => t.ExerciseTrainings)
-            .HasForeignKey(et => et.TrainingId)
-            .OnDelete(DeleteBehavior.Cascade);      
-
-        modelBuilder.Entity<Training>()
-        .Property(t => t.DateTimeStart)
-        .HasColumnType("timestamp without time zone");
-
-        modelBuilder.Entity<Training>()
-            .Property(t => t.DateTimeEnd)
-            .HasColumnType("timestamp without time zone");
+        }        
     }
 
     

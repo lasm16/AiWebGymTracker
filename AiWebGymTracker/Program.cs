@@ -1,10 +1,10 @@
-using AiWebGymTracker.Abstractions;
+﻿using AiWebGymTracker.Abstractions;
 using AiWebGymTracker.DAL;
 using AiWebGymTracker.Extensions;
 using AiWebGymTracker.HostedServices;
 using AiWebGymTracker.Infrastructure.Abstractions;
 using AiWebGymTracker.Infrastructure.Configurations;
-//using AiWebGymTracker.Infrastructure.Configurers;
+using AiWebGymTracker.Infrastructure.Configurers;
 using AiWebGymTracker.Infrastructure.Services;
 using AiWebGymTracker.Middleware;
 using AiWebGymTracker.Models.Entities;
@@ -29,8 +29,10 @@ namespace AiWebGymTracker
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddHostedService<HostedService>();
+            
             builder.Services.AddDbContext<AppDbContext>(options =>
                     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+            
             builder.Services.RegisterContext(builder.Configuration);
 
             builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
@@ -47,7 +49,8 @@ namespace AiWebGymTracker
             builder.Services.AddAuthentication().AddCookie();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ICustomMessageProvider, CustomMessageService>();
-            //builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
+            
+            builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
 
             builder.Services.AddTransient<IAiService, YandexAiService>();
 
@@ -59,7 +62,7 @@ namespace AiWebGymTracker
                 client.BaseAddress = new Uri(options.Value.Uri);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Api-Key", options.Value.ApiAuthorization);
             });
-
+            builder.Services.AddScoped<DataSeederExerciseTraining>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             var app = builder.Build();
@@ -69,11 +72,12 @@ namespace AiWebGymTracker
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            using (var scope = app.Services.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();                
-                await DataSeederExercise.SeedDevelopmentData(context);
-            }
+            
+            using var scope = app.Services.CreateScope();
+            var dаtaSeederExerciseTraining = scope.ServiceProvider.GetRequiredService<DataSeederExerciseTraining>();
+            await dаtaSeederExerciseTraining.SeedAsync(count: 20);
+            
+
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -87,6 +91,8 @@ namespace AiWebGymTracker
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 options.RoutePrefix = "api";
             });
+
+            
 
             app.MapControllerRoute(
                 name: "default",

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AiWebGymTracker.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCoachIdentitySystem : Migration
+    public partial class InitialSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -230,20 +230,27 @@ namespace AiWebGymTracker.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    coach_id = table.Column<int>(type: "integer", nullable: false),
                     trainee_id = table.Column<int>(type: "integer", nullable: false),
-                    start_training = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    end_training = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    start_training = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    end_training = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_trainings", x => x.id);
                     table.ForeignKey(
+                        name: "FK_trainings_aspnetusers_coach_id",
+                        column: x => x.coach_id,
+                        principalTable: "aspnetusers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_trainings_aspnetusers_trainee_id",
                         column: x => x.trainee_id,
                         principalTable: "aspnetusers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,23 +289,16 @@ namespace AiWebGymTracker.Migrations
                     range_repetitions = table.Column<int>(type: "integer", nullable: false),
                     duration = table.Column<TimeSpan>(type: "interval", nullable: false),
                     weight = table.Column<double>(type: "double precision", nullable: false),
-                    training_id = table.Column<int>(type: "integer", nullable: false)
+                    training_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_exercisetrainings", x => x.id);
                     table.ForeignKey(
-                        name: "FK_exercisetrainings_exercises_exercise_id",
-                        column: x => x.exercise_id,
-                        principalTable: "exercises",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_exercisetrainings_trainings_training_id",
                         column: x => x.training_id,
                         principalTable: "trainings",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -344,14 +344,14 @@ namespace AiWebGymTracker.Migrations
                 column: "FoodsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_exercisetrainings_exercise_id",
-                table: "exercisetrainings",
-                column: "exercise_id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_exercisetrainings_training_id",
                 table: "exercisetrainings",
                 column: "training_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_trainings_coach_id",
+                table: "trainings",
+                column: "coach_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_trainings_trainee_id",
@@ -381,6 +381,9 @@ namespace AiWebGymTracker.Migrations
                 name: "dishfood");
 
             migrationBuilder.DropTable(
+                name: "exercises");
+
+            migrationBuilder.DropTable(
                 name: "exercisetrainings");
 
             migrationBuilder.DropTable(
@@ -394,9 +397,6 @@ namespace AiWebGymTracker.Migrations
 
             migrationBuilder.DropTable(
                 name: "foods");
-
-            migrationBuilder.DropTable(
-                name: "exercises");
 
             migrationBuilder.DropTable(
                 name: "trainings");

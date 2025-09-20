@@ -8,10 +8,7 @@ namespace AiWebGymTracker.Models.Entities
     public class ExerciseTraining : Entity
     {
         [Column("exercise_id")]
-        public int ExerciseId { get; set; }
-
-        [ForeignKey("ExerciseId")]
-        public Exercise? Exercise { get; set; }
+        public int ExerciseId { get; set; }        
 
         [Column("type")]
         public ExerciseType Type { get; set; }
@@ -32,7 +29,7 @@ namespace AiWebGymTracker.Models.Entities
         public double Weight { get; set; }
 
         [Column("training_id")]
-        public int TrainingId { get; set; }
+        public int? TrainingId { get; set; }
 
         [ForeignKey("TrainingId")]
         public Training? Training { get; set; }

@@ -190,7 +190,7 @@ namespace AiWebGymTracker.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("repetitions");
 
-                    b.Property<int>("TrainingId")
+                    b.Property<int?>("TrainingId")
                         .HasColumnType("integer")
                         .HasColumnName("training_id");
 
@@ -203,8 +203,6 @@ namespace AiWebGymTracker.Migrations
                         .HasColumnName("weight");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ExerciseId");
 
                     b.HasIndex("TrainingId");
 
@@ -304,12 +302,16 @@ namespace AiWebGymTracker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CoachId")
+                        .HasColumnType("integer")
+                        .HasColumnName("coach_id");
+
                     b.Property<DateTime>("DateTimeEnd")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("end_training");
 
                     b.Property<DateTime>("DateTimeStart")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_training");
 
                     b.Property<int>("TraineeId")
@@ -321,6 +323,8 @@ namespace AiWebGymTracker.Migrations
                         .HasColumnName("status");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CoachId");
 
                     b.HasIndex("TraineeId");
 
@@ -447,30 +451,28 @@ namespace AiWebGymTracker.Migrations
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.ExerciseTraining", b =>
                 {
-                    b.HasOne("AiWebGymTracker.Models.Entities.Exercise", "Exercise")
-                        .WithMany("ExerciseTrainings")
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AiWebGymTracker.Models.Entities.Training", "Training")
                         .WithMany("ExerciseTrainings")
-                        .HasForeignKey("TrainingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Exercise");
+                        .HasForeignKey("TrainingId");
 
                     b.Navigation("Training");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Training", b =>
                 {
+                    b.HasOne("AiWebGymTracker.Models.Entities.ApplicationUser", "Coach")
+                        .WithMany()
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AiWebGymTracker.Models.Entities.ApplicationUser", "Trainee")
                         .WithMany()
                         .HasForeignKey("TraineeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Coach");
 
                     b.Navigation("Trainee");
                 });
@@ -539,11 +541,6 @@ namespace AiWebGymTracker.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AiWebGymTracker.Models.Entities.Exercise", b =>
-                {
-                    b.Navigation("ExerciseTrainings");
                 });
 
             modelBuilder.Entity("AiWebGymTracker.Models.Entities.Training", b =>

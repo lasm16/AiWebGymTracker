@@ -12,7 +12,5 @@ public class Exercise : Entity
     [Column("name")]
     public string Name { get; set; }
     [Column("description")]
-    public string Description { get; set; }
-
-    public virtual List<ExerciseTraining> ExerciseTrainings { get; set; } = new List<ExerciseTraining>();
+    public string Description { get; set; }    
 }
