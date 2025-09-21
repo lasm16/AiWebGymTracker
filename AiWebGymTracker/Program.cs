@@ -1,4 +1,5 @@
 using AiWebGymTracker.DAL;
+using AiWebGymTracker.DAL.Repositories;
 using AiWebGymTracker.DAL.Repositories.Abstractions;
 using AiWebGymTracker.Extensions;
 using AiWebGymTracker.HostedServices;
@@ -44,7 +45,7 @@ namespace AiWebGymTracker
             builder.Services.AddAuthentication().AddCookie();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ICustomMessageProvider, CustomMessageService>();
-            builder.Services.AddScoped<IUnitOfWork,IUnitOfWork>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             //builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
 
             //builder.Services.AddTransient<IAiService, YandexAiService>();

@@ -1,0 +1,109 @@
+﻿@model IEnumerable<AiWebGymTracker.Models.Entities.Training>
+@using AiWebGymTracker.Models.Enums
+
+@{
+    ViewData["Title"] = "Training Page";
+}
+
+<div id="content">
+    <div class="service-container">
+        <h2>Training Management</h2>
+
+        <!-- Create New Training -->
+        <a asp-controller="Training" asp-action="Create" class="service">
+            <div class="icon"><i class="fas fa-plus-circle"></i></div>
+            <div class="text-content">
+                <h3 class="title">Create New Training</h3>
+            </div>
+        </a>
+
+        <!-- Training List -->
+        <div class="training-list">
+            @foreach (var training in Model)
+            {
+                <div class="training-item">
+                    <h3>Training ID: @training.Id</h3>
+                    <p>Coach: @(training.Coach?.UserName ?? "N/A")</p>
+                    <p>Trainee: @training.Trainee.UserName</p>
+                    <p>Start: @training.DateTimeStart.ToString("g")</p>
+                    <p>End: @(training.DateTimeEnd == default ? "Not completed" : training.DateTimeEnd.ToString("g"))</p>
+                    <p>Status: @training.TrainingType</p>
+                    <p>Exercises: @(training.Exercises?.Count ?? 0)</p>
+
+                    <div class="training-actions">
+                        @if (training.TrainingType != TrainingType.Completed && training.TrainingType != TrainingType.Canceled)
+                        {
+                            <form asp-controller="Training" asp-action="Cancel" method="post">
+                                <input type="hidden" name="id" value="@training.Id" />
+                                <button type="submit" class="btn btn-danger">Cancel</button>
+                            </form>
+                            <a asp-controller="Training" asp-action="EditExercises" asp-route-id="@training.Id" class="btn btn-primary">Edit Exercises</a>
+                            <a asp-controller="Training" asp-action="EditDate" asp-route-id="@training.Id" class="btn btn-primary">Change Date</a>
+                            <form asp-controller="Training" asp-action="Complete" method="post">
+                                <input type="hidden" name="id" value="@training.Id" />
+                                <button type="submit" class="btn btn-success">Complete</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .service-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .service {
+        display: inline-block;
+        margin: 10px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .training-list {
+        margin-top: 20px;
+    }
+
+    .training-item {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+    .training-actions {
+        margin-top: 10px;
+    }
+
+    .btn {
+        margin-right: 5px;
+        padding: 8px 15px;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+        border: none;
+    }
+</style>
