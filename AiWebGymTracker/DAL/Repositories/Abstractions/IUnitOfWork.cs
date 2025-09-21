@@ -5,5 +5,6 @@ namespace AiWebGymTracker.DAL.Repositories.Abstractions;
 public interface IUnitOfWork
 {
     IFoodRepository FoodRepository { get; }
-    Task SavedChanged();
+    ITrainingRepository TrainingRepository { get; }
+    Task SavedChangedAsync();
 }

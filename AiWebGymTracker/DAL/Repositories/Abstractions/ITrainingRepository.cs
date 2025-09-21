@@ -3,9 +3,11 @@ using AiWebGymTracker.Models.Entities;
 
 namespace AiWebGymTracker.DAL
 {
-    public interface ITrainingRepository : IRepository<Training>
+    public interface ITrainingRepository
     {
-       Task<List<Training>> GetAllTrainingsAsync();
-       Task<Training> GetTrainingByIdAsync(int id);       
+        Task<List<Training>> GetAllAsync();
+        Task<Training> GetByIdAsync(int id);
+        Task AddAsync(Training training);
+        Task UpdateAsync(Training training);
     }
 }

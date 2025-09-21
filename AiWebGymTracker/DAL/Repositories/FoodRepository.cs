@@ -9,8 +9,7 @@ namespace AiWebGymTracker.DAL.Repositories;
 
 public class FoodRepository : Repository<Food>, IFoodRepository
 {
-    public FoodRepository(AppDbContext dbContext) : base(dbContext)
-    { }
+    public FoodRepository(AppDbContext dbContext) : base(dbContext) { }
     public async Task<List<Food>> GetAllFoodsAsync()
     {
         var query = AppDbContext.Foods.AsQueryable();
