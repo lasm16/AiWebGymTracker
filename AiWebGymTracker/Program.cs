@@ -46,6 +46,7 @@ namespace AiWebGymTracker
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ICustomMessageProvider, CustomMessageService>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<ITrainingService, TrainingService>();
             //builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureAppCookie>();
 
             //builder.Services.AddTransient<IAiService, YandexAiService>();

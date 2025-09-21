@@ -9,13 +9,15 @@ namespace AiWebGymTracker.Controllers
     public class TrainingController : Controller
     {
         private readonly ITrainingService _trainingService;
+        private readonly ILogger<TrainingController> _logger;
 
-        public TrainingController(ITrainingService trainingService)
+        public TrainingController(ITrainingService trainingService, ILogger<TrainingController> logger)
         {
             _trainingService = trainingService;
+            _logger = logger;
         }
 
-        [HttpGet]
+        [Authorize]
         public IActionResult Index()
         {
             return View();

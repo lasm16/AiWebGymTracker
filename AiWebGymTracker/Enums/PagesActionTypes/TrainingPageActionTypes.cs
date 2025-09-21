@@ -8,7 +8,7 @@ public enum TrainingPageActionTypes
     Add,
     [PagesRouter("Training", "GetTraining")]
     Get,
-    [PagesRouter("Training", "Home")]
+    [PagesRouter("Training", "TraningPage")]
     Home
     
 }
